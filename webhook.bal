@@ -50,7 +50,7 @@ service /ignore on httpListener {}
 
 function sendMail(string recipientEmail) returns error? {
 
-    string rawEmailTemplate = check io:fileReadString("./email_template.txt");
+    string rawEmailTemplate = check io:fileReadString("./index.html");
     string emailTemplate = regex:replaceAll(rawEmailTemplate, "newUser", recipientEmail);
 
     gmail:ConnectionConfig gmailConfig = {
