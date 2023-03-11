@@ -2,6 +2,8 @@ import ballerinax/trigger.asgardeo;
 import ballerina/log;
 import ballerina/http;
 import ballerinax/googleapis.gmail;
+import ballerina/file;
+import ballerina/io;
 
 configurable asgardeo:ListenerConfig config = ?;
 
