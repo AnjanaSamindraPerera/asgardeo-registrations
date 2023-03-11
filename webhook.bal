@@ -22,10 +22,10 @@ service asgardeo:RegistrationService on webhookListener {
     remote function onAddUser(asgardeo:AddUserEvent event ) returns error? {
       log:printInfo(event.toJsonString());
 
-      map<json> eventDataJson = <map<json>> event.eventData;
-      string userName = <string> eventDataJson.get("userName");
-    
-      error? err = sendMail(userName);
+      asgardeo:GenericUserData? userData = event.eventData;
+      string? userName = userData?.userName;
+
+      error? err = sendMail(<string> userName);
       if (err is error) {
           log:printInfo(err.message());
       }
@@ -36,10 +36,10 @@ service asgardeo:RegistrationService on webhookListener {
         
         log:printInfo(event.toJsonString());
 
-        map<json> eventDataJson = <map<json>> event.eventData;
-        string userName = <string> eventDataJson.get("userName");
+        asgardeo:GenericUserData? userData = event.eventData;
+        string? userName = userData?.userName;
 
-        error? err = sendMail(userName);
+        error? err = sendMail(<string> userName);
         if (err is error) {
             log:printInfo(err.message());
         }
@@ -49,11 +49,11 @@ service asgardeo:RegistrationService on webhookListener {
     remote function onAcceptUserInvite(asgardeo:GenericEvent event ) returns error? {
     
         log:printInfo(event.toJsonString());
-    
-        map<json> eventDataJson = <map<json>> event.eventData;
-        string userName = <string> eventDataJson.get("userName");
 
-        error? err = sendMail(userName);
+        asgardeo:GenericUserData? userData = event.eventData;
+        string? userName = userData?.userName;
+
+        error? err = sendMail(<string> userName);
         if (err is error) {
             log:printInfo(err.message());
         }
