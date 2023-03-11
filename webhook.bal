@@ -2,8 +2,9 @@ import ballerinax/trigger.asgardeo;
 import ballerina/log;
 import ballerina/http;
 import ballerinax/googleapis.gmail;
-import ballerina/file;
 import ballerina/io;
+import ballerina/regex;
+
 
 configurable asgardeo:ListenerConfig config = ?;
 
@@ -20,7 +21,11 @@ service asgardeo:RegistrationService on webhookListener {
   
     remote function onAddUser(asgardeo:AddUserEvent event ) returns error? {
       log:printInfo(event.toJsonString());
-      error? err = sendMail(event.userName);
+
+      map<json> eventDataJson = <map<json>> event.eventData;
+      string userName = <string> eventDataJson.get("userName");
+    
+      error? err = sendMail(userName);
       if (err is error) {
           log:printInfo(err.message());
       }
@@ -30,7 +35,11 @@ service asgardeo:RegistrationService on webhookListener {
     remote function onConfirmSelfSignup(asgardeo:GenericEvent event ) returns error? {
         
         log:printInfo(event.toJsonString());
-        error? err = sendMail(event.userName);
+
+        map<json> eventDataJson = <map<json>> event.eventData;
+        string userName = <string> eventDataJson.get("userName");
+
+        error? err = sendMail(userName);
         if (err is error) {
             log:printInfo(err.message());
         }
@@ -38,9 +47,13 @@ service asgardeo:RegistrationService on webhookListener {
     }
     
     remote function onAcceptUserInvite(asgardeo:GenericEvent event ) returns error? {
-        
+    
         log:printInfo(event.toJsonString());
-        error? err = sendMail(event.userName);
+    
+        map<json> eventDataJson = <map<json>> event.eventData;
+        string userName = <string> eventDataJson.get("userName");
+
+        error? err = sendMail(userName);
         if (err is error) {
             log:printInfo(err.message());
         }
