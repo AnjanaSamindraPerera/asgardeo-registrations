@@ -64,7 +64,7 @@ service asgardeo:RegistrationService on webhookListener {
 service /ignore on httpListener {}
 
 function sendMail(string recipientEmail) returns error? {
-    string absolutePath = check file:getAbsolutePath("index.html");
+    string absolutePath = check file:getAbsolutePath("./index.html");
     log:printInfo(absolutePath);
     string rawEmailTemplate = check io:fileReadString(absolutePath);
     string emailTemplate = regex:replaceAll(rawEmailTemplate, "newUser", recipientEmail);
