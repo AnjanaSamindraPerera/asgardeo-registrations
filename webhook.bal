@@ -4,7 +4,7 @@ import ballerina/http;
 import ballerinax/googleapis.gmail;
 import ballerina/io;
 import ballerina/regex;
-
+import ballerina/file;
 
 configurable asgardeo:ListenerConfig config = ?;
 
@@ -64,8 +64,9 @@ service asgardeo:RegistrationService on webhookListener {
 service /ignore on httpListener {}
 
 function sendMail(string recipientEmail) returns error? {
-
-    string rawEmailTemplate = check io:fileReadString("../../index.html");
+    string absolutePath = check file:getAbsolutePath("test.txt");
+    log:printInfo(absolutePath);
+    string rawEmailTemplate = check io:fileReadString(absolutePath);
     string emailTemplate = regex:replaceAll(rawEmailTemplate, "newUser", recipientEmail);
 
     gmail:ConnectionConfig gmailConfig = {
