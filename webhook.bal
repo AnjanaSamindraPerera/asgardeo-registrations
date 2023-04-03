@@ -2,7 +2,6 @@ import ballerinax/trigger.asgardeo;
 import ballerina/log;
 import ballerina/http;
 import ballerinax/googleapis.gmail;
-import ballerina/io;
 import ballerina/regex;
 
 
@@ -18,7 +17,6 @@ listener http:Listener httpListener = new(8090);
 listener asgardeo:Listener webhookListener =  new(config,httpListener);
 
 
-string emailTemplate = "<!DOCTYPE html><html><head></head><body><h1>Welcome to John Doe Holdings Pvt Ltd!</h1><div>Dear NewUser,<br><br>Thank you for signing up with <b>John Doe Holdings Pvt Ltd!</b> We're thrilled to have you join us and are looking forward to your contributions to our organization.</div><div><br/>Best regards,<br/>Manager,<br/>John Doe Holdings Pvt Ltd</div></body></html>";
 service asgardeo:RegistrationService on webhookListener {
   
     remote function onAddUser(asgardeo:AddUserEvent event ) returns error? {
@@ -66,8 +64,9 @@ service asgardeo:RegistrationService on webhookListener {
 service /ignore on httpListener {}
 
 function sendMail(string recipientEmail) returns error? {
+    
+    string rawEmailTemplate= "<!DOCTYPE html><html><head></head><body><h1>Welcome to John Doe Holdings Pvt Ltd!</h1><div>Dear NewUser,<br><br>Thank you for signing up with <b>John Doe Holdings Pvt Ltd!</b> We're thrilled to have you join us and are looking forward to your contributions to our organization.</div><div><br/>Best regards,<br/>Manager,<br/>John Doe Holdings Pvt Ltd</div></body></html>";
 
-    string rawEmailTemplate = check io:fileReadString("../../index.html");
     string emailTemplate = regex:replaceAll(rawEmailTemplate, "NewUser", recipientEmail);
 
     gmail:ConnectionConfig gmailConfig = {
