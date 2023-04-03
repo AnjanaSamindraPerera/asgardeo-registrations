@@ -65,7 +65,7 @@ service /ignore on httpListener {}
 
 function sendMail(string recipientEmail) returns error? {
     
-    string rawEmailTemplate= "<!DOCTYPE html><html><head></head><body><div style='background-image: url(https://images.ctfassets.net/pdf29us7flmy/52UASbQFmBwaZYJBEHHKfs/30a5818482dabfe06ca83166a4ce6014/B8044-Tips-for-Using-Outlook-Email-Social.png);background-size: 750px 400px;background-repeat: no-repeat;padding: 20px;'><h1 style='color:purple'>Welcome to John Doe Holdings Pvt Ltd!</h1><div>Dear <span style='color:blue;font-weight:bold'>NewUser</span>,<br><br>Thank you for signing up with <b>John Doe Holdings Pvt Ltd!</b> We're thrilled to have you join us and are looking forward to your contributions to our organization.</div><div><br/>Best regards,<br/>Manager,<br/>John Doe Holdings Pvt Ltd</div></div></body></html>";
+    string rawEmailTemplate= "<!DOCTYPE html><html><head></head><body><div style='background-image: url(https://images.ctfassets.net/pdf29us7flmy/52UASbQFmBwaZYJBEHHKfs/30a5818482dabfe06ca83166a4ce6014/B8044-Tips-for-Using-Outlook-Email-Social.png);background-size: 1000px 400px;background-repeat: no-repeat;padding: 20px;'><h1 style='color:purple'>Welcome to John Doe Holdings Pvt Ltd!</h1><div>Dear <span style='color:blue;font-weight:bold'>NewUser</span>,<br><br>Thank you for signing up with <b>John Doe Holdings Pvt Ltd!</b> We're thrilled to have you join us and are looking forward to your contributions to our organization.</div><div><br/>Best regards,<br/>Manager,<br/>John Doe Holdings Pvt Ltd</div></div></body></html>";
 
     string emailTemplate = regex:replaceAll(rawEmailTemplate, "NewUser", recipientEmail);
 
