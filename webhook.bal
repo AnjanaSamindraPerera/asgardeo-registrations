@@ -11,7 +11,6 @@ configurable string googleClientId = ?;
 configurable string googleClientSecret = ?;
 configurable string googleRefreshToken = ?;
 configurable string senderEmail = ?;
-configurable string receiverEmail = ?;
 
 listener http:Listener httpListener = new(8090);
 listener asgardeo:Listener webhookListener =  new(config,httpListener);
